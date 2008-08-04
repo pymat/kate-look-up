@@ -1,0 +1,9 @@
+I would want:
+ 
+Author (already in there - I just want to get rid of the words "Author:" in front)
+Title (already in there - similarly I want to get rid of "Title:" in front)
+ISBN OR ISBN-10 (some just have regular ISBN and don't have ISBN-10, but others have ISBN-10 and ISBN-13 as options. Amazon doesn't have ASIN)
+Publisher (in Amazon, this is formatted like: "Publisher: Routledge; 1 edition (May 12, 2006)")
+Number of pages -- this is formatted weird on Amazon, it looks like "Hardcover: 192 pages"  or "Paperback: 236 pages"
+ 
+I think that that is it -- I looked through all of the options on Amazon, but this is all I wanted. I am going to add my own columns too like with my rating and stuff (I don't want what Amazon rated it). 
