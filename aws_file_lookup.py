@@ -9,10 +9,11 @@ bookFile=open('/home/rexa/code/python/kate-look-up/kate-book-list-original.csv')
 bookStrings=bookFile.readlines()
 #get rid of "Date Acquired:" entries
 bookStrings=[entry for entry in bookStrings if entry[0:4]!="Date"]
-authorStrings=bookStrings[0::3]
-titleStrings=bookStrings[1::3]
+authorStrings=bookStrings[1::3]
+titleStrings=bookStrings[0::3]
 for author, title in zip(authorStrings,titleStrings):
-    print title.lstrip('Title: '),author.lstrip('Author: ')
+    print title.rstrip().strip('"').lstrip('Title: ')
+    print author.rstrip().strip('"').lstrip('Author: ')
     
     
 
