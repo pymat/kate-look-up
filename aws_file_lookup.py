@@ -8,7 +8,7 @@ from pyaws import ecs
 
 ecs.setLicenseKey('1P5WQWG01FJRRNESE4G2')
 
-bookFile=open('/home/rexa/code/python/kate-look-up/kate-book-list-original.csv')
+bookFile=open('/home/rexa/code/python/kate-look-up/book-list-4.txt')
 bookStrings=bookFile.readlines()
 outFile=open('/home/rexa/Desktop/out.test','w')
 
@@ -62,7 +62,7 @@ for author, title in zip(authorStrings,titleStrings):
     preInfo=[authorCln,queryStr,titleCln,'']
     preInfo=[entry+'\n' for entry in preInfo]
     print ''.join(preInfo)
-    outFile.writelines(preInfo)
+    #outFile.writelines(preInfo)
     
     
     for bookLink in bookLinkList:
@@ -73,13 +73,35 @@ for author, title in zip(authorStrings,titleStrings):
         bookPageSoup=BeautifulSoup(bookPage)
         infoSects=bookPageSoup.findAll('div',{'class':re.compile('^bookinfo_section_line')})
         infoStrs=[info.string.encode('ascii','ignore') for info in infoSects]
-        str.encode
         
-        infoStrs=[entry+'\n' for entry in infoStrs]
-        print ''.join(infoStrs)
-        infoStrs.append('\n\n')
-        outFile.writelines(infoStrs)
-        print '\n'
-                
+        
+        bookTitle=bookAuth=bookPub=bookYear=bookISBN10=bookISBN13=bookPages='NA'
+        bookTitle=infoStrs[0];
+        bookAuth=[entry for entry in infoStrs if entry.startswith('By ')][0]
+        bookAuth=bookAuth[3:]
+        bookPub=[entry for entry in infoStrs if entry.startswith('Published by ')][0]
+        bookYear=bookPub.split(',')[-1].strip()
+        bookPub=','.join(bookPub.split(',')[0:-1])
+        bookPub=bookPub[13:]
+        
+        try:
+            bookISBNs=[entry for entry in infoStrs if entry.startswith('ISBN')]
+            bookISBNs=bookISBNs[0][5:]
+            bookISBN10=bookISBNs.split(', ')[0]
+            bookISBN13=bookISBNs.split(', ')[1]
+        except Exception,e:
+            bookISBNs='NA'
+        try:
+            bookPages=[entry for entry in infoStrs if entry.endswith(' pages')][0].strip().rstrip(' pages')
+        except Exception, e:
+            bookPages='NA'
+
+        fmtList=[bookTitle,bookAuth,bookPub,bookYear,bookISBN10,bookISBN13,bookPages]
+        fmtStr =  '\t'.join([bookTitle,bookAuth,bookPub,bookYear,bookISBN10,bookISBN13,bookPages+'\n'])
+        
+        
+        print fmtStr
+        outFile.writelines(fmtStr)
+        
         time.sleep(.2)
         
